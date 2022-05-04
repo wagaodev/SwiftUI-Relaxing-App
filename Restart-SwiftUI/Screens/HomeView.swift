@@ -16,16 +16,21 @@ struct HomeView: View {
   // MARK: - Body
 
     var body: some View {
-      VStack(spacing: 20) {
-        Text("Home")
-          .font(.largeTitle)
+      ZStack {
+        Color("ColorBlue")
+          .ignoresSafeArea(.all, edges: .all)
+        VStack(spacing: 20) {
+          Text("Home")
+            .font(.largeTitle)
 
-        Button(action: {
-          isOnboardingViewActive = true
-        }) {
-          Text("Restart")
-        }
-      }
+          Button(action: {
+            isOnboardingViewActive = true
+          }) {
+            Text("Restart")
+          }
+        } //MARK: - VSTACK
+
+      } //MARK: - ZSTACK
     }
 }
 
