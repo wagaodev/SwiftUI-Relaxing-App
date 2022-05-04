@@ -14,6 +14,7 @@ struct OnboardingView: View {
   @AppStorage("onboarding") var isOnboardingViewActive: Bool = true
   @State private var buttonWidth: Double = UIScreen.main.bounds.width - 80
   @State private var buttonOffset: CGFloat = 0
+  @State private var isAnimating: Bool = false
 
   // MARK: - Body
   var body: some View {
@@ -40,6 +41,9 @@ struct OnboardingView: View {
           .multilineTextAlignment(.center)
           .padding(.horizontal, 10)
         }
+        .opacity(isAnimating ? 1 : 0)
+        .offset(y: isAnimating ? 0 : -40)
+        .animation(.easeOut(duration: 1), value: isAnimating)
 
         ZStack {
           CircleGroupView(ShapeColor: .white, ShapeOpacity: 0.2, ShapeLineWidth: 80, ShapeWidth: 300, ShapeHeight: 300)
@@ -47,6 +51,8 @@ struct OnboardingView: View {
           Image("character-1")
             .resizable()
             .scaledToFit()
+            .opacity(isAnimating ? 1 : 0)
+            .animation(.easeOut(duration: 0.5), value: isAnimating)
 
         }
 
@@ -110,8 +116,14 @@ struct OnboardingView: View {
 
         .frame(width: buttonWidth, height: 80, alignment: .center)
         .padding()
+        .opacity(isAnimating ? 1: 0)
+        .offset(y: isAnimating ? 0 : 40)
+        .animation(.easeOut(duration: 1), value: isAnimating)
       }
     }
+    .onAppear(perform: {
+      isAnimating = true
+    })
   }
 }
 
