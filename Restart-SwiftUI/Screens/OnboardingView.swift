@@ -94,6 +94,14 @@ struct OnboardingView: View {
                     buttonOffset = gesture.translation.width
                   }
                 }
+                .onEnded { _ in
+                  if buttonOffset > buttonWidth / 2 {
+                    buttonOffset = buttonWidth - 80
+                    isOnboardingViewActive = false
+                  } else {
+                    buttonOffset = 0
+                  }
+                }
             ) //MARK: - Button Gesture
             Spacer()
           }
