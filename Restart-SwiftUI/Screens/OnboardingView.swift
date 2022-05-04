@@ -15,6 +15,7 @@ struct OnboardingView: View {
 
   // MARK: - Body
   var body: some View {
+
     ZStack {
       Color("ColorBlue")
         .ignoresSafeArea(.all, edges: .all)
@@ -54,16 +55,61 @@ struct OnboardingView: View {
         }
 
         Spacer()
+
+        ZStack {
+
+          Capsule()
+            .fill(Color.white.opacity(0.2))
+
+          Capsule()
+            .fill(Color.white.opacity(0.2))
+            .padding(8)
+
+          Text("Vamos lá")
+            .font(.system(.title3, design: .rounded))
+            .fontWeight(.bold)
+            .foregroundColor(.white)
+            .offset(x: 23)
+
+          HStack {
+            Capsule()
+              .fill(Color("ColorRed"))
+              .frame(width: 80)
+
+            Spacer()
+          }
+          HStack {
+            ZStack {
+              Circle()
+                .fill(Color("ColorRed"))
+              Circle()
+                .fill(.black.opacity(0.15))
+                .padding(8)
+              Image(systemName: "chevron.right.2")
+                .font(.system(size: 24, weight: .bold))
+            }
+            .foregroundColor(.white)
+            .frame(width: 80, height: 80, alignment: .center)
+            .onTapGesture {
+              isOnboardingViewActive = false
+            }
+            Spacer()
+          }
+        }
+
+
+        .frame(height: 80, alignment: .center)
+        .padding()
       }
     }
   }
 }
 
 
-  // MARK: - Preview
+// MARK: - Preview
 
-  struct OnboardingView_Previews: PreviewProvider {
-    static var previews: some View {
-      OnboardingView()
-    }
+struct OnboardingView_Previews: PreviewProvider {
+  static var previews: some View {
+    OnboardingView()
   }
+}
