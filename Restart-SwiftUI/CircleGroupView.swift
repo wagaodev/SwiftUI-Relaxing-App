@@ -24,9 +24,7 @@ struct CircleGroupView: View {
         Circle()
           .stroke(ShapeColor.opacity(ShapeOpacity), lineWidth: CGFloat(ShapeLineWidth))
           .frame(width: CGFloat(ShapeWidth), height: CGFloat(ShapeHeight), alignment: .center)
-        Circle()
-          .stroke(ShapeColor.opacity(ShapeOpacity), lineWidth: CGFloat(ShapeLineWidth))
-          .frame(width: CGFloat(ShapeWidth), height: CGFloat(ShapeHeight), alignment: .center)
+       
       }
     }
 }
@@ -37,7 +35,7 @@ struct CircleGroupView_Previews: PreviewProvider {
         Color("ColorBlue")
           .ignoresSafeArea(.all, edges: .all)
 
-        CircleGroupView(ShapeColor: .white, ShapeOpacity: 0.2, ShapeLineWidth: 80, ShapeWidth: 300, ShapeHeight: 300)
+        CircleGroupView(ShapeColor: .white,  ShapeOpacity: 0.2, ShapeLineWidth: 80, ShapeWidth: 300, ShapeHeight: 300)
       }
     }
 }

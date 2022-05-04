@@ -25,19 +25,8 @@ struct HomeView: View {
           Spacer()
 
           ZStack {
-            ZStack {
-              Circle()
-                .stroke(Color("ColorGray").opacity(0.4), lineWidth: 70)
-                .frame(width: 220, height: 220, alignment: .center)
-
-              Circle()
-                .stroke(Color("ColorGray").opacity(0.9), lineWidth: 50)
-                .frame(width: 250, height: 250, alignment: .center)
-
-              Circle()
-                .stroke(Color("ColorGray").opacity(0.4), lineWidth: 80)
-                .frame(width: 270, height: 270, alignment: .center)
-            }
+            CircleGroupView(ShapeColor: .gray, ShapeOpacity: 0.2, ShapeLineWidth: 80, ShapeWidth: 300, ShapeHeight: 300)
+            CircleGroupView(ShapeColor: .gray, ShapeOpacity: 0.2, ShapeLineWidth: 80, ShapeWidth: 300, ShapeHeight: 250)
             Image("character-2")
               .resizable()
               .scaledToFit()
