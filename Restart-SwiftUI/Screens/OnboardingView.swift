@@ -48,13 +48,21 @@ struct OnboardingView: View {
 
         ZStack {
           CircleGroupView(ShapeColor: .white, ShapeOpacity: 0.2, ShapeLineWidth: 80, ShapeWidth: 300, ShapeHeight: 300)
+            .offset(x: imageOffset.width * -1)
+            .blur(radius: abs(imageOffset.width / 5))
+            .animation(.easeOut(duration: 1), value: imageOffset)
           CircleGroupView(ShapeColor: .white, ShapeOpacity: 0.2, ShapeLineWidth: 80, ShapeWidth: 250, ShapeHeight: 250)
+            .offset(x: imageOffset.width * -1)
+            .blur(radius: abs(imageOffset.width / 5))
+            .animation(.easeOut(duration: 1), value: imageOffset)
+          
           Image("character-1")
             .resizable()
             .scaledToFit()
             .opacity(isAnimating ? 1 : 0)
             .animation(.easeOut(duration: 0.5), value: isAnimating)
             .offset(x: imageOffset.width * 1.2, y: 0)
+            .rotationEffect(.degrees(Double(imageOffset.width / 20)))
             .gesture(
               DragGesture()
                 .onChanged { gesture in
