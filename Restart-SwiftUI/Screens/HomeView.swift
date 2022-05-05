@@ -20,7 +20,7 @@ struct HomeView: View {
       ZStack {
         Color("ColorGray")
           .ignoresSafeArea(.all, edges: .all)
-          .opacity(0.5)
+          .opacity(0.8)
 
         VStack(spacing: 80) {
           Spacer()
@@ -45,7 +45,8 @@ struct HomeView: View {
               Text("O tempo que leva à maestria \ndepende da intensidade do nosso foco")
                 .font(.system(size: 22))
                 .fontWeight(.light)
-                .foregroundColor(.gray)
+                .opacity(0.6)
+                .foregroundColor(.primary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 10)
             }
@@ -53,7 +54,8 @@ struct HomeView: View {
           Spacer()
           Button(action: {
             withAnimation {
-              isOnboardingViewActive = true
+              playSound(sound: "success", type: "m4a")
+              isOnboardingViewActive = true  
             }
           }) {
             Image(systemName: "arrow.triangle.2.circlepath.circle.fill")
