@@ -16,6 +16,10 @@ struct OnboardingView: View {
   @State private var buttonOffset: CGFloat = 0
   @State private var isAnimating: Bool = false
   @State private var imageOffset: CGSize = .zero
+  @State private var indicatorOpacity: Double = 1.0
+  @State private var textTitle: String = "Oferecer"
+
+  let hapticFeedback = UINotificationFeedbackGenerator()
 
   // MARK: - Body
   var body: some View {
@@ -28,15 +32,17 @@ struct OnboardingView: View {
         Spacer()
 
         VStack(spacing: 0) {
-          Text("Compartilhe")
+          Text(textTitle)
             .font(.system(size: 50))
             .fontWeight(.heavy)
             .foregroundColor(.white)
+            .transition(.opacity)
+            .id(textTitle)
 
           Text("""
-               Não é o quanto compartilhamos, mas quanto amor colocamos nessa ação.
+               Valor a quem merece, amor a quem dá, carinho a quem troca e consideração a quem tem.
                """)
-          .font(.system(size: 22))
+          .font(.system(size: 20))
           .fontWeight(.light)
           .foregroundColor(.white)
           .multilineTextAlignment(.center)
@@ -55,7 +61,7 @@ struct OnboardingView: View {
             .offset(x: imageOffset.width * -1)
             .blur(radius: abs(imageOffset.width / 5))
             .animation(.easeOut(duration: 1), value: imageOffset)
-          
+
           Image("character-1")
             .resizable()
             .scaledToFit()
@@ -68,14 +74,34 @@ struct OnboardingView: View {
                 .onChanged { gesture in
                   if abs(imageOffset.width) <= 150 {
                     imageOffset = gesture.translation
+
+                    withAnimation(.linear(duration: 0.25)) {
+                      indicatorOpacity = 0
+                      textTitle = "Receber"
+                    }
                   }
                 }
                 .onEnded {_ in
                   imageOffset = .zero
+
+                  withAnimation(.linear(duration: 0.25)) {
+                    indicatorOpacity = 1
+                    textTitle = "Oferecer"
+                  }
                 }
             )
             .animation(.easeOut(duration: 1), value: imageOffset)
         }
+        .overlay(
+          Image(systemName: "arrow.left.and.right.circle")
+            .font(.system(size: 44, weight: .ultraLight))
+            .foregroundColor(.white)
+            .offset(y: 20)
+            .opacity(isAnimating ? 1: 0)
+            .animation(.easeOut(duration: 1).delay(2), value: isAnimating)
+            .opacity(indicatorOpacity)
+          ,alignment: .bottom
+        )
 
         Spacer()
 
@@ -124,9 +150,12 @@ struct OnboardingView: View {
                 .onEnded { _ in
                   withAnimation(Animation.easeOut(duration: 0.4)) {
                     if buttonOffset > buttonWidth / 2 {
+                      hapticFeedback.notificationOccurred(.success)
+                      playSound(sound: "chimeup", type: "mp3")
                       buttonOffset = buttonWidth - 80
                       isOnboardingViewActive = false
                     } else {
+                      hapticFeedback.notificationOccurred(.warning)
                       buttonOffset = 0
                     }
                   }
@@ -153,8 +182,8 @@ struct OnboardingView: View {
 
 // MARK: - Preview
 
-//struct OnboardingView_Previews: PreviewProvider {
-//  static var previews: some View {
-//    OnboardingView()
-//  }
-//}
+struct OnboardingView_Previews: PreviewProvider {
+  static var previews: some View {
+    OnboardingView()
+  }
+}
